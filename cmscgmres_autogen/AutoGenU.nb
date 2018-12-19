@@ -1,0 +1,513 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     15330,        504]
+NotebookOptionsPosition[     13539,        439]
+NotebookOutlinePosition[     13992,        457]
+CellTagsIndexPosition[     13949,        454]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Set Directory and Filename of the Input File", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SetDirectory", "[", 
+  "\"\<C:\\\\Users\\\\ohtsuka\\\\Documents\\\\AutoGen\\\\AutoGenU\\\\AGtest3\>\
+\"", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"InpFile", "=", "\"\<inputSAD.m\>\""}]}], "Input",
+ CellChangeTimes->{{3.574847606421777*^9, 3.5748476252978563`*^9}, {
+   3.574928878858056*^9, 3.574928902710498*^9}, 3.574928971670249*^9, {
+   3.574937137915183*^9, 3.574937140832389*^9}, 3.5749383062977085`*^9, 
+   3.574938955801407*^9, {3.5820230054972825`*^9, 3.582023010209491*^9}, {
+   3.58586366192957*^9, 3.585863662428771*^9}, {3.6247497547700014`*^9, 
+   3.6247497597960014`*^9}, {3.624750129304002*^9, 3.6247501305270014`*^9}}],
+
+Cell[BoxData["\<\"C:\\\\Users\\\\ohtsuka\\\\Documents\\\\AutoGen\\\\AutoGenU\\\
+\\AGtest3\"\>"], "Output",
+ CellChangeTimes->{
+  3.5748477997838364`*^9, 3.574848078109756*^9, 3.5748481837677994`*^9, 
+   3.574850397663427*^9, 3.5749289269257407`*^9, 3.574928974743455*^9, 
+   3.57493714178399*^9, 3.5749372144489183`*^9, 3.5749373480631523`*^9, {
+   3.574937385222418*^9, 3.5749374150808706`*^9}, {3.574938941823783*^9, 
+   3.574938961370617*^9}, 3.582023013672697*^9, 3.582023130501302*^9, 
+   3.585863676780796*^9, 3.6247497757820015`*^9, 3.6247501419420013`*^9, 
+   3.6247502227420015`*^9}],
+
+Cell[BoxData["\<\"inputSAD.m\"\>"], "Output",
+ CellChangeTimes->{
+  3.5748477997838364`*^9, 3.574848078109756*^9, 3.5748481837677994`*^9, 
+   3.574850397663427*^9, 3.5749289269257407`*^9, 3.574928974743455*^9, 
+   3.57493714178399*^9, 3.5749372144489183`*^9, 3.5749373480631523`*^9, {
+   3.574937385222418*^9, 3.5749374150808706`*^9}, {3.574938941823783*^9, 
+   3.574938961370617*^9}, 3.582023013672697*^9, 3.582023130501302*^9, 
+   3.585863676780796*^9, 3.6247497757820015`*^9, 3.6247501419420013`*^9, 
+   3.624750222743002*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Function for C Code Generation", "Section",
+ Evaluatable->False,
+ CellChangeTimes->{3.582247147249027*^9},
+ AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell["Differentiation by a Vector:  Dv", "Subsubsection",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Dv", "[", 
+   RowBox[{"f_", ",", "x_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"j", ",", "ans"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"ans", "=", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         SubscriptBox["\[PartialD]", 
+          RowBox[{
+          "x", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}]], "f"}],
+         ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", 
+          RowBox[{"Length", "[", "x", "]"}]}], "}"}]}], "]"}]}], ";", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Length", "[", 
+         RowBox[{"Dimensions", "[", "ans", "]"}], "]"}], "\[NotEqual]", "1"}],
+        ",", 
+       RowBox[{"ans", "=", 
+        RowBox[{"Transpose", "[", "ans", "]"}]}]}], "]"}], ";", "ans"}]}], 
+   "]"}]}]], "Input",
+ AspectRatioFixed->True]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["User Settings", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Off", "[", 
+   RowBox[{"General", "::", "spell"}], "]"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Default", " ", "Values"}], " ", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{"SimplifyLevel", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Precondition", "=", "0"}], ";"}]}], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Get", "[", "InpFile", "]"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Read", " ", "Input", " ", "File"}], " ", "*)"}]}]], "Input"],
+
+Cell[BoxData[{
+ RowBox[{"If", "[", 
+  RowBox[{
+   RowBox[{"dimx", " ", "!=", " ", 
+    RowBox[{"Length", "[", "fxu", "]"}]}], ",", " ", 
+   RowBox[{
+    RowBox[{
+    "\"\<Warning! Dimension Missmatch in dimx and fxu.\>\"", ">>", 
+     "outfile"}], ";", 
+    RowBox[{
+     StyleBox["Abort", "MR"], 
+     StyleBox["[", "MR"], " ", 
+     StyleBox["]", "MR"]}], ";"}]}], "]"}], "\n", 
+ RowBox[{"If", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Length", "[", "MyVarNames", "]"}], "!=", " ", 
+    RowBox[{"Length", "[", "MyVarValues", "]"}]}], ",", " ", 
+   RowBox[{
+    RowBox[{
+    "\"\<Warning! Dimension Missmatch in MyVarNames and MyVarValues\>\"", ">>",
+      "outfile"}], ";", 
+    RowBox[{
+     StyleBox["Abort", "MR"], 
+     StyleBox["[", "MR"], " ", 
+     StyleBox["]", "MR"]}], ";"}]}], "]"}], "\n", 
+ RowBox[{"If", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"Length", "[", "MyArrNames", "]"}], "!=", " ", 
+      RowBox[{"Length", "[", "MyArrDims", "]"}]}], ")"}], "||", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"Length", "[", "MyArrDims", "]"}], "!=", " ", 
+      RowBox[{"Length", "[", "MyArrValues", "]"}]}], ")"}]}], ",", " ", 
+   RowBox[{
+    RowBox[{
+    "\"\<Warning! Dimension Missmatch in MyArrNames, MyArrDims and \
+MyArrValues\>\"", ">>", "outfile"}], ";", 
+    RowBox[{
+     StyleBox["Abort", "MR"], 
+     StyleBox["[", "MR"], " ", 
+     StyleBox["]", "MR"]}], ";"}]}], "]"}], "\n"}], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Generate Euler-Lagrange Equations\
+\>", "Section",
+ Evaluatable->False,
+ CellChangeTimes->{3.582247284361027*^9},
+ AspectRatioFixed->True],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"H", "=", 
+   RowBox[{"L", "+", 
+    RowBox[{"lmdv", ".", "fxu"}], "+", 
+    RowBox[{"muv", ".", "Cxu"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"uv", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{"uv", ",", "muv"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"dimuc", "=", 
+   RowBox[{"dimu", "+", "dimc"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Hx", "=", 
+   RowBox[{"Dv", "[", 
+    RowBox[{"H", ",", "xv"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Hu", "=", 
+   RowBox[{"Dv", "[", 
+    RowBox[{"H", ",", "uv"}], "]"}]}], ";"}], "\n", 
+ RowBox[{"If", "[", 
+  RowBox[{
+   RowBox[{"SimplifyLevel", ">", "0"}], ",", 
+   RowBox[{
+    RowBox[{"Hx", "=", 
+     RowBox[{"Simplify", "[", "Hx", "]"}]}], ";", 
+    RowBox[{"Hu", "=", 
+     RowBox[{"Simplify", "[", "Hu", "]"}]}], ";"}]}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{"dlmddt", "=", 
+   RowBox[{"-", "Hx"}]}], ";"}]}], "Input",
+ AspectRatioFixed->True],
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{
+   RowBox[{"Precondition", "==", "1"}], ",", "\n", "\t", 
+   RowBox[{
+    RowBox[{"Huu", "=", 
+     RowBox[{"Dv", "[", 
+      RowBox[{"Hu", ",", "uv"}], "]"}]}], ";", "\n", "\t", 
+    RowBox[{"Hu", "=", 
+     RowBox[{"LinearSolve", "[", 
+      RowBox[{"Huu", ",", "Hu"}], "]"}]}], ";", "\n", "\t", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"SimplifyLevel", ">", "0"}], ",", 
+      RowBox[{"Hu", "=", 
+       RowBox[{"Simplify", "[", "Hu", "]"}]}]}], "]"}], ";"}]}], "\n", 
+  "]"}]], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"phix", "=", 
+   RowBox[{"Dv", "[", 
+    RowBox[{"phi", ",", "xv"}], "]"}]}], ";"}], "\n", 
+ RowBox[{"If", "[", 
+  RowBox[{
+   RowBox[{"SimplifyLevel", ">", "0"}], ",", 
+   RowBox[{
+    RowBox[{"phix", "=", 
+     RowBox[{"Simplify", "[", "phix", "]"}]}], ";"}]}], "]"}]}], "Input",
+ AspectRatioFixed->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Generate C Code", "Section",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell[BoxData[
+ RowBox[{"<<", "Format3`", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"For", " ", "Mathematica", " ", 
+    RowBox[{"ver", ".", " ", "9"}]}], " ", "*)"}]}]], "Input",
+ CellChangeTimes->{{3.5748502639067764`*^9, 3.574850264104788*^9}, {
+  3.574938188735901*^9, 3.574938214865947*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{"<<", "Format2`"}], "  ", "For", " ", "Mathematica", " ", 
+   RowBox[{"ver", ".", " ", "8"}], " ", "or", " ", "earlier"}], " ", 
+  "*)"}]], "Input",
+ CellChangeTimes->{{3.5749382243351636`*^9, 3.5749382440691986`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"<<", "Optimize2`"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell["Conversion of Arrays", "Subsubsection",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ArrNames", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{"MyArrNames", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<x\>\"", ",", "\"\<lmd\>\"", ",", "\"\<u\>\"", ",", "\"\<p\>\"", 
+       ",", "\"\<dx\>\"", ",", "\"\<dlmd\>\"", ",", "\"\<hu\>\""}], "}"}]}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ArrDims", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{"MyArrDims", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "dimx", ",", "dimx", ",", "dimuc", ",", "dimp", ",", "dimx", ",", 
+       "dimx", ",", "dimuc"}], "}"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ArrCnv", "=", 
+   RowBox[{"{", "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{"ArrCnv", "=", 
+     RowBox[{"Join", "[", 
+      RowBox[{"ArrCnv", ",", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "ArrNames", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}],
+            "<>", "\"\<[\>\"", "<>", 
+           RowBox[{"ToString", "[", "i", "]"}], "<>", "\"\<]\>\""}], 
+          "\[Rule]", 
+          RowBox[{
+           RowBox[{
+           "ArrNames", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}],
+            "<>", "\"\<[\>\"", "<>", 
+           RowBox[{"ToString", "[", 
+            RowBox[{"i", "-", "1"}], "]"}], "<>", "\"\<]\>\""}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", 
+           RowBox[{
+           "ArrDims", "\[LeftDoubleBracket]", "j", 
+            "\[RightDoubleBracket]"}]}], "}"}]}], "]"}]}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"j", ",", 
+      RowBox[{"Length", "[", "ArrNames", "]"}]}], "}"}]}], "]"}], 
+  ";"}]}], "Input",
+ AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{"Optimize", ",", 
+    RowBox[{"OptimizeVariable", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"o", ",", "Array"}], "}"}]}], ",", 
+    RowBox[{"OptimizeNull", "->", 
+     RowBox[{"Prepend", "[", 
+      RowBox[{
+       RowBox[{"ToExpression", "[", "ArrNames", "]"}], ",", "List"}], "]"}]}],
+     ",", 
+    RowBox[{"OptimizeCoefficients", "\[Rule]", "True"}], ",", 
+    RowBox[{"OptimizeProcedure", "\[Rule]", "False"}]}], "]"}], 
+  ";"}]], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lept", "=", 
+   RowBox[{"Length", "[", 
+    RowBox[{
+     RowBox[{"Optimize", "[", "pt", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"leph", "=", 
+   RowBox[{"Length", "[", 
+    RowBox[{
+     RowBox[{"Optimize", "[", "phix", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"lexp", "=", 
+   RowBox[{"Length", "[", 
+    RowBox[{
+     RowBox[{"Optimize", "[", "fxu", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"lelp", "=", 
+   RowBox[{"Length", "[", 
+    RowBox[{
+     RowBox[{"Optimize", "[", "dlmddt", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"lehu", "=", 
+   RowBox[{"Length", "[", 
+    RowBox[{
+     RowBox[{"Optimize", "[", "Hu", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"leno", "=", 
+   RowBox[{"Max", "[", 
+    RowBox[{"{", 
+     RowBox[{"lept", ",", "leph", ",", "lexp", ",", "lelp", ",", "lehu"}], 
+     "}"}], "]"}]}], ";"}]}], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ArrCnv2", "=", "ArrCnv"}], ";"}], "\n", 
+ RowBox[{"Do", "[", "\n", "\t", 
+  RowBox[{"ArrCnv2", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{"ArrCnv2", ",", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"\"\<o[\>\"", "<>", 
+         RowBox[{"ToString", "[", "i", "]"}], "<>", "\"\<]\>\""}], "\[Rule]", 
+        RowBox[{"\"\<o[\>\"", "<>", 
+         RowBox[{"ToString", "[", 
+          RowBox[{"i", "-", "1"}], "]"}], "<>", "\"\<]\>\""}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "leno"}], "}"}]}], "]"}]}], "]"}]}], "\n", 
+  "]"}]}], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{"CAssign", ",", 
+    RowBox[{"AssignOptimize", "->", "True"}], ",", 
+    RowBox[{"AssignPrecision", "\[Rule]", "12"}], ",", 
+    RowBox[{"AssignReplace", "->", "ArrCnv2"}], ",", 
+    RowBox[{"AssignToArray", "->", 
+     RowBox[{"ToExpression", "[", "ArrNames", "]"}]}], ",", 
+    RowBox[{"AssignIndent", "\[Rule]", "\"\<    \>\""}]}], "]"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{
+  3.5748474203511343`*^9, {3.5749373790292068`*^9, 3.574937408014058*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Output to File", "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"outfile", "=", 
+   RowBox[{"StringJoin", "[", 
+    RowBox[{"outfn", ",", "\"\<.c\>\""}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Splice", "[", 
+   RowBox[{"\"\<AutoGenU.mc\>\"", ",", "outfile", ",", 
+    RowBox[{"FormatType", "->", "OutputForm"}]}], "]"}], ";"}]}], "Input",
+ AspectRatioFixed->True]
+}, Open  ]]
+}, Closed]]
+},
+CellGrouping->Manual,
+WindowSize->{762, 533},
+WindowMargins->{{2, Automatic}, {Automatic, 5}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+FrontEndVersion->"9.0 for Microsoft Windows (32-bit) (2013\:5e741\:670828\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 66, 0, 49, "Subsection"],
+Cell[CellGroupData[{
+Cell[670, 26, 660, 10, 52, "Input"],
+Cell[1333, 38, 592, 9, 31, "Output"],
+Cell[1928, 49, 529, 8, 31, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2506, 63, 137, 3, 86, "Section",
+ Evaluatable->False],
+Cell[CellGroupData[{
+Cell[2668, 70, 103, 2, 39, "Subsubsection",
+ Evaluatable->False],
+Cell[2774, 74, 895, 29, 52, "Input"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[3718, 109, 32, 0, 56, "Section"],
+Cell[3753, 111, 329, 9, 92, "Input"],
+Cell[4085, 122, 164, 4, 31, "Input"],
+Cell[4252, 128, 1446, 44, 212, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5735, 177, 148, 5, 56, "Section",
+ Evaluatable->False],
+Cell[5886, 184, 933, 32, 152, "Input"],
+Cell[6822, 218, 548, 16, 112, "Input"],
+Cell[7373, 236, 341, 11, 52, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[7751, 252, 80, 2, 56, "Section",
+ Evaluatable->False],
+Cell[7834, 256, 292, 6, 31, "Input"],
+Cell[8129, 264, 275, 6, 31, "Input"],
+Cell[8407, 272, 54, 1, 31, "Input"],
+Cell[CellGroupData[{
+Cell[8486, 277, 91, 2, 39, "Subsubsection",
+ Evaluatable->False],
+Cell[8580, 281, 1722, 51, 192, "Input"]
+}, Open  ]],
+Cell[10317, 335, 512, 14, 72, "Input"],
+Cell[10832, 351, 1127, 36, 132, "Input"],
+Cell[11962, 389, 619, 17, 152, "Input"],
+Cell[12584, 408, 521, 12, 72, "Input"],
+Cell[CellGroupData[{
+Cell[13130, 424, 39, 0, 39, "Subsubsection"],
+Cell[13172, 426, 339, 9, 52, "Input"]
+}, Open  ]]
+}, Closed]]
+}
+]
+*)
+
+(* End of internal cache information *)
