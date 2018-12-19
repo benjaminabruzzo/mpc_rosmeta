@@ -1,7 +1,7 @@
-	catkin build apriltags apriltags_ros 
-	catkin build hast hast_gazebo hast_gazebo_msgs message_to_tf metahast robot_descriptions robot_plugins
-
-	git remote add bb git@bitbucket.org:ags_robotics/metahast.git
-	git remote add pluto git@pluto.local:benjamin/metahast.git
-
+# installation
+	mkdir ~/ros/src/mpc_meta && cd ~/ros/src/mpc_meta && git init && git remote add gh git@github.com:westpoint-robotics/mpc_rosmeta.git && git pull gh master
+	touch ~/ros/build_mpc.bash
+	echo ". ~/ros/src/mpc_meta/scripts/build_mpc.bash" >> ~/ros/build_mpc.bash
+	echo "source ~/ros/devel/setup.bash" >> ~/ros/build_mpc.bash
+	cd ~/ros && chmod +x build_mpc.bash && bash build_mpc.bash
 
