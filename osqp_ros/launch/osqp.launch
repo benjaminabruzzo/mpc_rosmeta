@@ -1,0 +1,15 @@
+<launch>
+
+	<arg name="launcher" 	default="osqp" />
+
+	<node pkg="osqp_ros"	type="osqp_node.py"	name="osqp_node_$(arg launcher)"	output="screen"	required="true">
+		<rosparam command="load" 		file="$(find osqp_ros)/models/oneDquad.yaml"/>
+		<param name="trigger_topic" 	value="/mpc/osqp/trigger"/>
+	</node>
+
+
+</launch>
+
+<!-- rostopic pub -1 /mpc/osqp/trigger std_msgs/Empty -->
+<!-- rostopic pub -r 4 /mpc/osqp/trigger std_msgs/Empty -->
+

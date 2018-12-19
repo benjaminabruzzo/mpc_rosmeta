@@ -4,6 +4,8 @@ import osqp
 import numpy as np
 import scipy as sp
 import scipy.sparse as sparse
+import yaml
+
 
 # Ros Libs
 import roslib
@@ -13,15 +15,37 @@ from std_msgs.msg import Empty
 class osqp_node():
 	# Must have __init__(self) function for a class, similar to a C++ class constructor.
 	def __init__(self):
-		# input_topic = rospy.get_param('~input_topic')
+		
 		# output_topic = rospy.get_param('~output_topic')
 
 		# subscribers and publishers
-		self.cmd_vel_sub = rospy.Subscriber("/mpc/osqp/trigger",Empty, self.osqp_trigger)
-		# self.cmd_vel_pub = rospy.Publisher(output_topic,Twist, queue_size=10)
+		trigger_topic = rospy.get_param('~trigger_topic')
+		self.mpc_trigger_sub = rospy.Subscriber(trigger_topic,Empty, self.osqp_trigger)
 
-		# Discrete time model of a quadcopter
-		dt = 0.25;
+		# model_yaml = rospy.get_param('~model_yaml')
+
+		# Prediction horizon
+		# N = 10
+		N = rospy.get_param('~N')
+		self.N=N
+		dt = rospy.get_param('~dt')
+		# dt = 0.25; # Assuming each increment is 0.25 seconds long
+
+		Ad_yaml = rospy.get_param('~Ad')
+		Ad_data = Ad_yaml['data']
+
+		print(Ad_data)
+		Ad=Ad_data
+		for i in range(len(Ad_data)):
+			# print("Ad_data[{}] = {}").format(i, Ad_data[i])
+			if isinstance(Ad_data[i], str):
+				Ad[i] = eval(Ad_data[i])
+			# print("Ad[{}] = {}").format(i, Ad[i])
+
+		test_mat = self.yaml_matrix2csc(Ad, Ad_yaml['rows'], Ad_yaml['rows'])
+		print(test_mat)
+
+		# Discrete time model of a 1D quadcopter
 		self.Ad = sparse.csc_matrix([
 		  [1.0,  dt, dt*dt/2],
 		  [0.0, 1.0, dt],
@@ -51,9 +75,6 @@ class osqp_node():
 		self.x0 = np.zeros(3)
 		xr = np.array([1.0, 0.0, 0.0])
 
-		# Prediction horizon
-		N = 10
-		self.N=N
 
 		# Cast MPC problem to a QP: x = (x(0),x(1),...,x(N),u(0),...,u(N-1))
 		# - quadratic objective
@@ -102,6 +123,16 @@ class osqp_node():
 		self.l[:self.nx] = -self.x0
 		self.u[:self.nx] = -self.x0
 		self.osqp_solver.update(l=self.l, u=self.u)
+
+	def list2csc(self,data, rows, cols):
+		
+		dt = 0.25
+		csc_mat = sparse.csc_matrix([
+		  [1.0,  dt, dt*dt/2],
+		  [0.0, 1.0, dt],
+		  [0.0, 0.0, 1.0]])
+		return csc_mat
+
 
 
 if __name__ == '__main__':
