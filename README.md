@@ -5,3 +5,5 @@
 	echo "source ~/ros/devel/setup.bash" >> ~/ros/build_mpc.bash
 	cd ~/ros && chmod +x build_mpc.bash && bash build_mpc.bash
 
+# For osqp:
+	pip install osqp
