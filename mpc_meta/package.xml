@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package>
+  <name>meta_mpc</name>
+  <version>0.0.0</version>
+  <description>The meta_mpc</description>
+  <maintainer email="todo@todo.todo">benjamin</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>
