@@ -8,7 +8,7 @@
 
 
 #include <eigen3/Eigen/Core>
-// #include "matrixfree_gmres.hpp"
+#include "matrixfree_gmres.hpp"
 #include "nmpc_model.hpp"
 #include "init_cgmres.hpp"
 

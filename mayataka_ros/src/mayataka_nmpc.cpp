@@ -25,6 +25,7 @@ class mayataka_nmpc
 		// Define the model in NMPC.
 		NMPCModel nmpc_model;
 		MultipleShootingCGMRES cgmres_solver;
+		Simulator cgmres_simulator;
 
 	public:
 		mayataka_nmpc()
@@ -50,10 +51,9 @@ class mayataka_nmpc
 			cgmres_solver.initSolution(0, initial_state, initial_guess_control_input, 1.0e-06, 50);
 
 			ROS_INFO("mayataka_nmpc:: mayataka_nmpc started.");
-			// Define the simulator.
-			// Simulator cgmres_simulator(nmpc_model);
 			// Perform a numerical simulation.
-			// cgmres_simulator.simulation(cgmres_solver, initial_state, 0, 10, 0.001, "example");
+			cgmres_simulator.initModel(nmpc_model);
+			cgmres_simulator.simulation(cgmres_solver, initial_state, 0, 10, 0.001, "example");
 		}
 
 		void nodeShutDown(const std_msgs::EmptyConstPtr& msg)

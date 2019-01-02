@@ -28,12 +28,13 @@ add_library(nmpcsolver 	STATIC
 	src/matrixfree_gmres.cpp 
 	src/init_cgmres.cpp 
 	src/continuation_gmres.cpp 
-	src/multiple_shooting_cgmres.cpp)
+	src/multiple_shooting_cgmres.cpp
+	)
 add_library(simulator STATIC 
+	src/numerical_integrator.cpp
 	src/simulator.cpp 
-	src/numerical_integrator.cpp)
-add_library(model STATIC 
-	src/nmpc_model.cpp)
+	)
+add_library(model STATIC src/nmpc_model.cpp)
 
 
 add_executable(mayataka_nmpc src/mayataka_nmpc.cpp)
