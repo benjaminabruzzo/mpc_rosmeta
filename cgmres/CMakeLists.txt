@@ -22,11 +22,11 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 	include
-	../mayataka_cgmres
 	${catkin_INCLUDE_DIRS}
 )
 
 
 add_executable(         cgmres_model  src/cgmres_model.cpp)
-  # add_dependencies(     cgmres_model  hast_gencpp)
   target_link_libraries(cgmres_model  ${catkin_LIBRARIES})
+  # add_dependencies(     cgmres_model  hast_gencpp)
+
