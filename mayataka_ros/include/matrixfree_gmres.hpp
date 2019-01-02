@@ -6,10 +6,9 @@
 #ifndef MATRIXFREE_GMRES_H
 #define MATRIXFREE_GMRES_H
 
-
+#include <pick_model.hpp>
 #include <iostream>
 #include <eigen3/Eigen/Core>
-#include "nmpc_model.hpp"
 
 
 // Serves the matrix-free GMRES method, which supports solving the nonlinear problem by using the GMRES method that solves a linear problem Ax = b in a short computational time.

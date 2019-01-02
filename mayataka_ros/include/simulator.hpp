@@ -1,25 +1,24 @@
 //
+//
 // Simulator of the C/GMRES method and multiple shooting based C/GMRES method.
 //
 
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-
+#include <pick_model.hpp>
 #include <iostream>
 #include <fstream>
 #include <chrono>
 #include <eigen3/Eigen/Core>
-#include "nmpc_model.hpp"
-#include "numerical_integrator.hpp"
 #include "continuation_gmres.hpp"
 #include "multiple_shooting_cgmres.hpp"
 
 
 // Simulates the C/GMRES method and multiple shooting based C/GMRES method.
 // Opens file streams and saves simulation data.
-// Updates the state using the method in NumericalIntegrator.
-class Simulator //final : virtual public NumericalIntegrator{
+
+class Simulator 
 {
 private:
     NMPCModel model_;

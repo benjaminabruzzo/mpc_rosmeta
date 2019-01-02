@@ -1,17 +1,4 @@
-// Programming tools
-#include <eigen3/Eigen/Core>
-#include <cmath>
-
-//ROS Communications
-#include <ros/ros.h>
-	#include <std_msgs/Empty.h>
-
-// mayataka libs
-#include <nmpc_model.hpp>
-#include <continuation_gmres.hpp>
-#include <multiple_shooting_cgmres.hpp>
-#include <simulator.hpp>
-
+#include <mayataka_nmpc.hpp>
 class mayataka_nmpc
 {
 	private:		
@@ -24,7 +11,8 @@ class mayataka_nmpc
 
 		// Define the model in NMPC.
 		NMPCModel nmpc_model;
-		MultipleShootingCGMRES cgmres_solver;
+		// MultipleShootingCGMRES cgmres_solver;
+		ContinuationGMRES cgmres_solver;
 		Simulator cgmres_simulator;
 
 	public:

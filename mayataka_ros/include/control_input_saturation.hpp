@@ -6,10 +6,9 @@
 #ifndef CONTROL_INPUT_SATURATION_H
 #define CONTROL_INPUT_SATURATION_H
 
-
+#include <pick_model.hpp>
 #include <eigen3/Eigen/Core>
 #include "matrixfree_gmres.hpp"
-#include "nmpc_model.hpp"
 #include "init_cgmres.hpp"
 
 
