@@ -22,7 +22,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 	include
-	../cgmres_mayataka
+	../mayataka_cgmres
 	${catkin_INCLUDE_DIRS}
 )
 

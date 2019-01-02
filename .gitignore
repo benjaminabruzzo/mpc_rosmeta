@@ -69,14 +69,5 @@ ref_materials/
 
 
 ## CGMRES cruft
-cgmres_mayataka/examples/2linkarm/CMakeFiles/*
-cgmres_mayataka/examples/pendubot/CMakeFiles/*
-cgmres_mayataka/src/CMakeFiles/*
-cgmres_mayataka/CMakeFiles/*
-cgmres_mayataka/build/*
-cgmres_mayataka/dev/*
-cgmres_mayataka/*.a
-cgmres_mayataka/*.dat
-cgmres_mayataka/*.out
-cgmres_mayataka/*.cmake
-cgmres_mayataka/Makefile
+mayataka_cgmres/build/*
+*.dat
