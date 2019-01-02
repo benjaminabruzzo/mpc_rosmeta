@@ -24,6 +24,20 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_library(nmpcsolver 	STATIC 
+	src/matrixfree_gmres.cpp 
+	src/init_cgmres.cpp 
+	src/continuation_gmres.cpp 
+	src/multiple_shooting_cgmres.cpp)
+add_library(simulator STATIC 
+	src/simulator.cpp 
+	src/numerical_integrator.cpp)
+add_library(model STATIC 
+	src/nmpc_model.cpp)
+
+
 add_executable(mayataka_nmpc src/mayataka_nmpc.cpp)
 	target_link_libraries(mayataka_nmpc ${catkin_LIBRARIES})
-		
+	target_link_libraries(mayataka_nmpc simulator)
+	target_link_libraries(mayataka_nmpc nmpcsolver)
+	target_link_libraries(mayataka_nmpc model)		

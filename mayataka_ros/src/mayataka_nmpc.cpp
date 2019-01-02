@@ -1,4 +1,17 @@
-#include <mayataka_nmpc.hpp>
+// Programming tools
+#include <eigen3/Eigen/Core>
+#include <cmath>
+
+//ROS Communications
+#include <ros/ros.h>
+	#include <std_msgs/Empty.h>
+
+// mayataka libs
+#include <nmpc_model.hpp>
+#include <continuation_gmres.hpp>
+#include <multiple_shooting_cgmres.hpp>
+#include <simulator.hpp>
+
 class mayataka_nmpc
 {
 	private:		
@@ -7,12 +20,11 @@ class mayataka_nmpc
 			ros::Subscriber NodeShutDown_sub;
 			std::string s_shutdown_topic;
 
-
 		int dim_state_, dim_control_input_, dim_constraints_;
 
 		// Define the model in NMPC.
 		NMPCModel nmpc_model;
-
+		MultipleShootingCGMRES cgmres_solver;
 
 	public:
 		mayataka_nmpc()
@@ -22,18 +34,26 @@ class mayataka_nmpc
 			ROS_INFO("mayataka_nmpc:: NodeShutDown_sub s_shutdown_topic.");
 			NodeShutDown_sub 	= n.subscribe(s_shutdown_topic,		1, &mayataka_nmpc::nodeShutDown, 	this);
 
-
 			// Define the solver of C/GMRES.
-			// ContinuationGMRES cgmres_solver(nmpc_model, 1.0, 1.0, 50, 1.0e-06, 1000, 5);
-			MultipleShootingCGMRES cgmres_solver(nmpc_model, 1.0, 1.0, 50, 1.0e-06, 1000, 3);
+			double horizon_division_num = 50;
+			cgmres_solver.setSolver(nmpc_model, 1.0, 1.0, horizon_division_num, 1.0e-06, 1000, 3);
 
-			// Define the simulator.
-			Simulator cgmres_simulator(nmpc_model);
+			// Set the initial state.
+			Eigen::VectorXd initial_state(nmpc_model.dimState());
+			initial_state = Eigen::VectorXd::Zero(nmpc_model.dimState());
 
+			// Set the initial guess of the control input vector.
+			Eigen::VectorXd initial_guess_control_input(nmpc_model.dimControlInput()+nmpc_model.dimConstraints());
+			initial_guess_control_input = Eigen::VectorXd::Zero(nmpc_model.dimControlInput()+nmpc_model.dimConstraints());
+
+			// Initialize the solution of the C/GMRES method.
+			cgmres_solver.initSolution(0, initial_state, initial_guess_control_input, 1.0e-06, 50);
 
 			ROS_INFO("mayataka_nmpc:: mayataka_nmpc started.");
-
-
+			// Define the simulator.
+			// Simulator cgmres_simulator(nmpc_model);
+			// Perform a numerical simulation.
+			// cgmres_simulator.simulation(cgmres_solver, initial_state, 0, 10, 0.001, "example");
 		}
 
 		void nodeShutDown(const std_msgs::EmptyConstPtr& msg)
@@ -44,8 +64,6 @@ class mayataka_nmpc
 		}
 };
 
-
-
 int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "mayataka_nmpc");
@@ -53,4 +71,3 @@ int main(int argc, char **argv)
 	ros::spin();
 	return 0;
 }
-
